@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @SpringBootApplication
-@EntityScan(basePackages = "com.donaton.logistica.model") // 🔥 ESTO
+@EntityScan(basePackages = "com.donaton.logistica.model")
 public class MsLogisticApplication {
 
     public static void main(String[] args) {

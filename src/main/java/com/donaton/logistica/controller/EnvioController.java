@@ -24,7 +24,7 @@ public class EnvioController {
 
     @PostMapping
     public Envio crear(@RequestBody Envio e) {
-        e.setEstado("Pendiente"); // 🔥 clave
+        e.setEstado("Pendiente");
         return service.guardar(e);
     }
 
