@@ -2,6 +2,7 @@ package com.donaton.logistica.controller;
 
 import com.donaton.logistica.model.Envio;
 import com.donaton.logistica.service.EnvioService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,27 +23,42 @@ public class EnvioController {
         return service.listar();
     }
 
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Envio> buscarPorId(@PathVariable Long id) {
+        Envio envio = service.buscarPorId(id);
+        return (envio != null) ? ResponseEntity.ok(envio) : ResponseEntity.notFound().build();
+    }
+
     @PostMapping
     public Envio crear(@RequestBody Envio e) {
         e.setEstado("Pendiente");
         return service.guardar(e);
     }
 
+
     @PutMapping("/{id}")
-    public Envio actualizar(@PathVariable Long id, @RequestBody Envio e) {
+    public ResponseEntity<Envio> actualizar(@PathVariable Long id, @RequestBody Envio e) {
         Envio actual = service.buscarPorId(id);
 
-        if (actual == null) return null;
+        if (actual == null) {
+            return ResponseEntity.notFound().build();
+        }
 
         actual.setDestino(e.getDestino());
         actual.setTransportista(e.getTransportista());
         actual.setEstado(e.getEstado());
 
-        return service.guardar(actual);
+        return ResponseEntity.ok(service.guardar(actual));
     }
 
+
     @DeleteMapping("/{id}")
-    public void eliminar(@PathVariable Long id) {
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+        if (!service.existePorId(id)) {
+            return ResponseEntity.notFound().build();
+        }
         service.eliminar(id);
+        return ResponseEntity.ok().build();
     }
 }

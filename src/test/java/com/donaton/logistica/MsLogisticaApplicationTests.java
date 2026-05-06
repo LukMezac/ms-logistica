@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class MsLogisticaApplicationTests {
 
     @Test
-    void contextLoads() {
+    void contextLaoads() {
     }
 
 }
