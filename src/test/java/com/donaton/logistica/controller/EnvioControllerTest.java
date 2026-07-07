@@ -1,11 +1,13 @@
 package com.donaton.logistica.controller;
 
+import com.donaton.logistica.MsLogisticApplication;
 import com.donaton.logistica.model.Envio;
 import com.donaton.logistica.service.EnvioService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -23,6 +25,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+
+@ContextConfiguration(classes = MsLogisticApplication.class)
 @WebMvcTest(EnvioController.class)
 class EnvioControllerTest {
 
@@ -95,7 +99,6 @@ class EnvioControllerTest {
 
     @Test
     void actualizarDebeRetornar404CuandoNoExiste() throws Exception {
-        // CORRECCIÓN: El mock devuelve null para forzar el estado 404 en el controlador[cite: 1]
         when(envioService.buscarPorId(11L)).thenReturn(null);
 
         Envio request = crearEnvio("Pasto", "Interrapidisimo", "En camino");
